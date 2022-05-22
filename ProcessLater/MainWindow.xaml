@@ -81,8 +81,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Command="{Binding CopyFilesCommand}" Content="复制" ToolTip="将列表中的文件(夹)复制到指定目录" FontSize="16"/>
-            <Button Grid.Column="2" Command="{Binding DeleteFilesCommand}" Content="删除" ToolTip="删除列表中的文件(夹)" FontSize="16"/>
+            <Button Grid.Column="0" Command="{Binding CopyFilesCommand}" Content="复制至文件夹" ToolTip="将列表中的文件(夹)复制到指定文件夹" FontSize="16"/>
+            <Button Grid.Column="2" Command="{Binding DeleteFilesCommand}" Content="移动至回收站" ToolTip="删除列表中的文件(夹)（移动至回收站）" FontSize="16"/>
         </Grid>
     </Grid>
 </Window>
