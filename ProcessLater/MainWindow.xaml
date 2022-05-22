@@ -51,9 +51,9 @@
                                         </Style>
                                     </Rectangle.Style>
                                 </Rectangle>
-                                <Label Grid.Column="1" Content="{Binding Path}" Tag="{Binding}"
-                               FontSize="11" Padding="0" VerticalAlignment="Center"
-                               MouseRightButtonDown="TextBlock_MouseRightButtonDown"/>
+                                <TextBlock Grid.Column="1" Text="{Binding Path}" Tag="{Binding}"
+                                           FontSize="11" Padding="0" VerticalAlignment="Center"
+                                           MouseRightButtonDown="TextBlock_MouseRightButtonDown"/>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
