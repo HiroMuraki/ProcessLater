@@ -1,0 +1,79 @@
+﻿<Window x:Class="ProcessLater.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        xmlns:local="clr-namespace:ProcessLater"
+        mc:Ignorable="d" DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}"
+        WindowStartupLocation="CenterScreen"
+        Title="文件(夹)批处理" Height="500" Width="600" KeyDown="Window_KeyDown">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding SaveListAsFileCommand}" Content="保存列表" ToolTip="将待处理文件(夹)列表保存到一个文件中" FontSize="14"/>
+            <Button Grid.Column="1" Command="{Binding LoadListFromFileCommand}" Content="读取列表" ToolTip="从文件中读取待处理文件(夹)列表" FontSize="14"/>
+        </Grid>
+        <Grid x:Name="MainContentArea" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition x:Name="OutputTextArea" Height="20" MinHeight="20"/>
+            </Grid.RowDefinitions>
+            <ListBox Grid.Row="0" ItemsSource="{Binding FileEntities}" AllowDrop="True" Drop="ListBox_Drop">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type local:FileEntity}">
+                        <Grid Height="15">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Rectangle Grid.Column="0" Width="5" Margin="0,0,5,0">
+                                <Rectangle.Style>
+                                    <Style TargetType="Rectangle">
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Type}" Value="File">
+                                                <Setter Property="Fill" Value="CadetBlue" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Type}" Value="Directory">
+                                                <Setter Property="Fill" Value="PaleVioletRed" />
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </Rectangle.Style>
+                            </Rectangle>
+                            <Label Grid.Column="1" Content="{Binding Path}" Tag="{Binding}"
+                               FontSize="11" Padding="0" VerticalAlignment="Center"
+                               MouseRightButtonDown="TextBlock_MouseRightButtonDown"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="3" HorizontalAlignment="Stretch" Background="CadetBlue"/>
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Button x:Name="ExpandButton" Grid.Row="0" Height="20" ToolTip="展开/收起处理输出" Command="{Binding ExpandOrFoldOutputTextCommand}"/>
+                <TextBox x:Name="Output" Grid.Row="1" IsReadOnly="True"/>
+            </Grid>
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Command="{Binding CopyFilesCommand}" Content="复制" ToolTip="将列表中的文件(夹)复制到指定目录" FontSize="16"/>
+            <Button Grid.Column="2" Command="{Binding DeleteFilesCommand}" Content="删除" ToolTip="删除列表中的文件(夹)" FontSize="16"/>
+        </Grid>
+    </Grid>
+</Window>
