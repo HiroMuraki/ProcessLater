@@ -28,35 +28,44 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition x:Name="OutputTextArea" Height="20" MinHeight="20"/>
             </Grid.RowDefinitions>
-            <ListBox Grid.Row="0" ItemsSource="{Binding FileEntities}" AllowDrop="True" Drop="ListBox_Drop">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type local:FileEntity}">
-                        <Grid Height="15">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition/>
-                            </Grid.ColumnDefinitions>
-                            <Rectangle Grid.Column="0" Width="5" Margin="0,0,5,0">
-                                <Rectangle.Style>
-                                    <Style TargetType="Rectangle">
-                                        <Style.Triggers>
-                                            <DataTrigger Binding="{Binding Type}" Value="File">
-                                                <Setter Property="Fill" Value="CadetBlue" />
-                                            </DataTrigger>
-                                            <DataTrigger Binding="{Binding Type}" Value="Directory">
-                                                <Setter Property="Fill" Value="PaleVioletRed" />
-                                            </DataTrigger>
-                                        </Style.Triggers>
-                                    </Style>
-                                </Rectangle.Style>
-                            </Rectangle>
-                            <Label Grid.Column="1" Content="{Binding Path}" Tag="{Binding}"
+            <Grid Grid.Row="0">
+                <ListBox ItemsSource="{Binding FileEntities}" AllowDrop="True" Drop="ListBox_Drop">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:FileEntity}">
+                            <Grid Height="15">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Rectangle Grid.Column="0" Width="5" Margin="0,0,5,0">
+                                    <Rectangle.Style>
+                                        <Style TargetType="Rectangle">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Type}" Value="File">
+                                                    <Setter Property="Fill" Value="CadetBlue" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Type}" Value="Directory">
+                                                    <Setter Property="Fill" Value="PaleVioletRed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Rectangle.Style>
+                                </Rectangle>
+                                <Label Grid.Column="1" Content="{Binding Path}" Tag="{Binding}"
                                FontSize="11" Padding="0" VerticalAlignment="Center"
                                MouseRightButtonDown="TextBlock_MouseRightButtonDown"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                <Border x:Name="TipArea" IsHitTestVisible="False">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20">
+                        <Span>拖拽文件(夹)至此区域以添加</Span>
+                        <LineBreak/>
+                        <Span>鼠标右键点击文件(夹)以移除</Span>
+                    </TextBlock>
+                </Border>
+            </Grid>
             <GridSplitter Grid.Row="1" ResizeDirection="Rows" Height="3" HorizontalAlignment="Stretch" Background="CadetBlue"/>
             <Grid Grid.Row="2">
                 <Grid.RowDefinitions>

@@ -82,6 +82,17 @@ namespace ProcessLater {
                     ExpandButton.Content = IsOuputAreaExpanded() ? '\u25BC' : '\u25B2';
                     e.CanExecute = true;
                 });
+
+            FileEntities.CollectionChanged += (s, e) => {
+                if (s is ObservableCollection<FileEntity> collcetion) {
+                    if (collcetion.Count > 0) {
+                        TipArea.Visibility = Visibility.Collapsed;
+                    }
+                    else {
+                        TipArea.Visibility = Visibility.Visible;
+                    }
+                }
+            };
             InitializeComponent();
         }
 
