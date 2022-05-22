@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.VisualBasic.FileIO;
 
 namespace ProcessLater {
     /// <summary>
@@ -24,8 +25,8 @@ namespace ProcessLater {
         public MainWindow() {
             RegisterCommand(DeleteFilesCommand, (s, e) => {
                 Process(
-                    fileProcessor: f => File.Delete(f),
-                    directoryProcessor: f => Directory.Delete(f, true)
+                    fileProcessor: f => FileSystem.DeleteFile(f, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin),
+                    directoryProcessor: f => FileSystem.DeleteDirectory(f, UIOption.OnlyErrorDialogs, RecycleOption.SendToRecycleBin)
                 );
             });
             RegisterCommand(CopyFilesCommand, (s, e) => {
@@ -77,13 +78,11 @@ namespace ProcessLater {
                 });
 
             FileEntities.CollectionChanged += (s, e) => {
-                if (s is ObservableCollection<FileEntity> collcetion) {
-                    if (collcetion.Count > 0) {
-                        TipArea.Visibility = Visibility.Collapsed;
-                    }
-                    else {
-                        TipArea.Visibility = Visibility.Visible;
-                    }
+                if (FileEntities.Count > 0) {
+                    TipArea.Visibility = Visibility.Collapsed;
+                }
+                else {
+                    TipArea.Visibility = Visibility.Visible;
                 }
             };
             InitializeComponent();
